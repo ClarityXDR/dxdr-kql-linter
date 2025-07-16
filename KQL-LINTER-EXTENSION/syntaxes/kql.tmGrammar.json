@@ -1,0 +1,164 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "KQL",
+    "scopeName": "source.kql",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#functions"
+        },
+        {
+            "include": "#table-names"
+        },
+        {
+            "include": "#column-names"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.double-slash.kql",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block.kql",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.kql",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.kql",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.kql",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.kql",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.decimal.kql",
+                    "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+                },
+                {
+                    "name": "constant.numeric.hex.kql",
+                    "match": "\\b0[xX][0-9a-fA-F]+\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.logical.kql",
+                    "match": "\\b(and|or|not)\\b"
+                },
+                {
+                    "name": "keyword.operator.comparison.kql",
+                    "match": "(==|!=|<>|<=|>=|<|>|=~|!~|has|has_any|has_all|contains|!contains|startswith|!startswith|endswith|!endswith|matches|in|!in|between)"
+                },
+                {
+                    "name": "keyword.operator.arithmetic.kql",
+                    "match": "(\\+|-|\\*|/|%)"
+                },
+                {
+                    "name": "keyword.operator.assignment.kql",
+                    "match": "="
+                },
+                {
+                    "name": "keyword.operator.pipe.kql",
+                    "match": "\\|"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.kql",
+                    "match": "\\b(where|project|extend|summarize|sort|order|top|limit|distinct|union|join|render|let|as|by|on|kind|innerunique|inner|leftouter|rightouter|fullouter|leftanti|rightanti|leftsemi|rightsemi)\\b"
+                },
+                {
+                    "name": "keyword.other.kql",
+                    "match": "\\b(asc|desc|nulls|first|last|with|step|from|to|ago|now|datetime|timespan|dynamic|case|iff|isnull|isempty|isnotempty|isnan|isinf)\\b"
+                },
+                {
+                    "name": "constant.language.kql",
+                    "match": "\\b(true|false|null)\\b"
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "entity.name.function.aggregate.kql",
+                    "match": "\\b(count|sum|avg|min|max|stdev|variance|percentile|dcount|dcountif|countif|sumif|avgif|minif|maxif|arg_max|arg_min|make_set|make_list|make_bag)\\b"
+                },
+                {
+                    "name": "entity.name.function.datetime.kql",
+                    "match": "\\b(bin|floor|ceiling|round|ago|now|datetime_diff|format_datetime|format_timespan|getmonth|getyear|dayofweek|dayofyear|weekofyear|monthofyear|hourofday|minuteofhour|secondofminute)\\b"
+                },
+                {
+                    "name": "entity.name.function.string.kql",
+                    "match": "\\b(strlen|substring|strcat|split|replace|trim|ltrim|rtrim|tolower|toupper|reverse|indexof|parse|extract|extract_all|parse_json|todynamic|tostring|tolong|todouble|tobool|todecimal|toguid|todatetime|totimespan)\\b"
+                },
+                {
+                    "name": "entity.name.function.conditional.kql",
+                    "match": "\\b(iff|case|coalesce|isnull|isempty|isnotempty|isnan|isinf)\\b"
+                }
+            ]
+        },
+        "table-names": {
+            "patterns": [
+                {
+                    "name": "entity.name.type.table.xdr.kql",
+                    "match": "\\b(DeviceEvents|DeviceFileEvents|DeviceImageLoadEvents|DeviceLogonEvents|DeviceNetworkEvents|DeviceNetworkInfo|DeviceProcessEvents|DeviceRegistryEvents|DeviceFileCertificateInfo|DeviceInfo|AlertEvidence|AlertInfo|EmailEvents|EmailPostDeliveryEvents|EmailUrlInfo|EmailAttachmentInfo|IdentityLogonEvents|IdentityQueryEvents|IdentityDirectoryEvents|CloudAppEvents|BehaviorAnalytics|AADSignInEventsBeta|AADProvisioningLogs)\\b"
+                },
+                {
+                    "name": "entity.name.type.table.sentinel.kql", 
+                    "match": "\\b(SecurityEvent|Syslog|Event|Heartbeat|Perf|WindowsEvent|CommonSecurityLog|DnsEvents|W3CIISLog|SecurityAlert|SecurityIncident|ThreatIntelligenceIndicator|AuditLogs|SigninLogs|AADNonInteractiveUserSignInLogs|AADServicePrincipalSignInLogs|AADManagedIdentitySignInLogs|OfficeActivity|AzureActivity|AWSCloudTrail|GCPAuditLogs)\\b"
+                }
+            ]
+        },
+        "column-names": {
+            "patterns": [
+                {
+                    "name": "variable.other.column.kql",
+                    "match": "\\b[A-Z][a-zA-Z0-9_]*\\b(?=\\s*(==|!=|<>|<=|>=|<|>|=~|!~|has|contains|startswith|endswith|matches|in|between))"
+                }
+            ]
+        }
+    }
+}

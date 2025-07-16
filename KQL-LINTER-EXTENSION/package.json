@@ -1,0 +1,291 @@
+{
+  "name": "kql-schema-reference-tools",
+  "displayName": "KQL Schema Reference Tools",
+  "description": "Portable VS Code extension for KQL query validation, schema reference, and detection rule management for Microsoft Defender XDR and Sentinel",
+  "version": "0.1.0",
+  "publisher": "kql-tools",
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "KQL",
+    "Kusto",
+    "XDR",
+    "Sentinel",
+    "Microsoft Defender",
+    "Azure Sentinel",
+    "Schema",
+    "Detection Rules",
+    "MITRE ATT&CK"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.kql",
+    "workspaceContains:**/*.kusto"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "kql",
+        "aliases": [
+          "KQL",
+          "Kusto Query Language"
+        ],
+        "extensions": [
+          ".kql",
+          ".kusto",
+          ".csl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "kql",
+        "scopeName": "source.kql",
+        "path": "./syntaxes/kql.tmGrammar.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "kql-schema-tools.refreshSchemas",
+        "title": "Refresh Schemas",
+        "category": "KQL Schema Tools",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "kql-schema-tools.viewTableSchema",
+        "title": "View Table Schema",
+        "category": "KQL Schema Tools"
+      },
+      {
+        "command": "kql-schema-tools.validateKQL",
+        "title": "Validate KQL Query",
+        "category": "KQL Schema Tools",
+        "icon": "$(check)"
+      },
+      {
+        "command": "kql-schema-tools.formatKQL",
+        "title": "Format KQL Query",
+        "category": "KQL Schema Tools",
+        "icon": "$(symbol-operator)"
+      },
+      {
+        "command": "kql-schema-tools.createDetectionRule",
+        "title": "Create Detection Rule",
+        "category": "KQL Schema Tools",
+        "icon": "$(add)"
+      },
+      {
+        "command": "kql-schema-tools.validateDetectionRule",
+        "title": "Validate Detection Rule",
+        "category": "KQL Schema Tools"
+      },
+      {
+        "command": "kql-schema-tools.exportRules",
+        "title": "Export Rules to CSV",
+        "category": "KQL Schema Tools",
+        "icon": "$(export)"
+      },
+      {
+        "command": "kql-schema-tools.importRules",
+        "title": "Import Rules from CSV",
+        "category": "KQL Schema Tools",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "kql-schema-tools.switchSchemaSource",
+        "title": "Switch Schema Source (XDR/Sentinel)",
+        "category": "KQL Schema Tools",
+        "icon": "$(symbol-enum)"
+      },
+      {
+        "command": "kql-schema-tools.updateSchemasFromMicrosoft",
+        "title": "Update Schemas from Microsoft Learn",
+        "category": "KQL Schema Tools",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "kql-schema-tools.autoUpdateSchemas",
+        "title": "Enable Auto-Update Schemas",
+        "category": "KQL Schema Tools",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "kql-schema-tools.validateDetectionRule",
+        "title": "Validate Custom Detection Rule",
+        "category": "KQL Schema Tools",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "kql-schema-tools.generateDetectionTemplate",
+        "title": "Generate Detection Rule Template",
+        "category": "KQL Schema Tools",
+        "icon": "$(add)"
+      }
+    ],
+    "views": {
+      "kql-tools": [
+        {
+          "id": "kqlSchemaExplorer",
+          "name": "Schema Explorer",
+          "icon": "$(database)",
+          "when": "resourceExtname == .kql || resourceExtname == .kusto"
+        },
+        {
+          "id": "kqlDetectionRules",
+          "name": "Detection Rules",
+          "icon": "$(shield)",
+          "when": "resourceExtname == .kql || resourceExtname == .kusto"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "kql-tools",
+          "title": "KQL Tools",
+          "icon": "$(database)"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "kql-schema-tools.refreshSchemas",
+          "when": "view == kqlSchemaExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "kql-schema-tools.switchSchemaSource",
+          "when": "view == kqlSchemaExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "kql-schema-tools.updateSchemasFromMicrosoft",
+          "when": "view == kqlSchemaExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "kql-schema-tools.createDetectionRule",
+          "when": "view == kqlDetectionRules",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "kql-schema-tools.validateKQL",
+          "when": "resourceExtname == .kql",
+          "group": "kql"
+        },
+        {
+          "command": "kql-schema-tools.formatKQL",
+          "when": "resourceExtname == .kql",
+          "group": "kql"
+        },
+        {
+          "command": "kql-schema-tools.validateDetectionRule",
+          "when": "resourceExtname == .kql",
+          "group": "kql"
+        },
+        {
+          "command": "kql-schema-tools.generateDetectionTemplate",
+          "when": "resourceExtname == .kql",
+          "group": "kql"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "kql-schema-tools.viewTableSchema",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "KQL Schema Tools",
+      "properties": {
+        "kqlSchemaTools.defaultSchemaSource": {
+          "type": "string",
+          "enum": [
+            "xdr",
+            "sentinel",
+            "auto"
+          ],
+          "default": "auto",
+          "description": "Default schema source to use (XDR, Sentinel, or auto-detect)"
+        },
+        "kqlSchemaTools.schemaPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to custom schema files directory"
+        },
+        "kqlSchemaTools.enableRealTimeValidation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable real-time KQL validation as you type"
+        },
+        "kqlSchemaTools.enableAutoCompletion": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable auto-completion for tables and columns"
+        },
+        "kqlSchemaTools.showDeprecationWarnings": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show warnings for deprecated table names and functions"
+        },
+        "kqlSchemaTools.mitreAttackMappingEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable MITRE ATT&CK technique mapping for detection rules"
+        },
+        "kqlSchemaTools.autoUpdateSchemas": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically check for schema updates from Microsoft Learn on startup"
+        },
+        "kqlSchemaTools.updateCheckInterval": {
+          "type": "number",
+          "default": 24,
+          "description": "Hours between automatic schema update checks (0 to disable)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "package-extension": "vsce package"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.101.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.0",
+    "esbuild": "^0.25.3",
+    "eslint": "^9.25.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.3"
+  }
+}
