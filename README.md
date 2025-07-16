@@ -1,0 +1,1 @@
+# dxdr-kql-linter
